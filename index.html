@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7BOOST. — AI Prompt Optimizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #0a0a0a; color: #e5e7eb; }
+        .mono { font-family: 'Montserrat', sans-serif; }
+        .accent-bg { background-color: #3b82f6; }
+        .section-title { font-weight: 600; font-size: 1.125rem; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+        .screenshot-placeholder { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #374151; }
+        body::before {
+            content: ''; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80vw; height: 80vw; max-width: 900px; max-height: 900px;
+            background-image: url('7blogo.png'); background-size: contain; background-repeat: no-repeat;
+            background-position: center; opacity: 0.08; z-index: 0; pointer-events: none;
+        }
+        body::after { content: ''; position: fixed; inset: 0; backdrop-filter: blur(3px); z-index: 0; pointer-events: none; }
+        .max-w-7xl { position: relative; z-index: 2; }
+        .proof-card { background: linear-gradient(135deg, #111827 0%, #0f172a 100%); border: 1px solid #1f2937; }
+        .step-number { font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 500; color: #1f2937; line-height: 1; }
+        .glow { box-shadow: 0 0 40px rgba(59, 130, 246, 0.15); }
+
+        /* PROMPT BOXES */
+        .pbox {
+            background: #0f1117;
+            border: 1px solid #1e1e1e;
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 1.75;
+            height: 320px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #222 transparent;
+        }
+        .pbox::-webkit-scrollbar { width: 3px; }
+        .pbox::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+        .pbox.raw { color: #555; font-size: 14px; display: flex; align-items: center; }
+        .pbox.boosted { color: #9ca3af; }
+        .pbox.boosted .role { color: #e5e7eb; display: block; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #1e1e1e; }
+        .pbox.boosted .constraint { color: #444; display: block; margin-top: 10px; padding-top: 10px; border-top: 1px solid #1e1e1e; }
+
+        /* RESPONSE BOXES */
+        .rbox {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 1.75;
+            height: 320px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #222 transparent;
+            white-space: pre-wrap;
+        }
+        .rbox::-webkit-scrollbar { width: 3px; }
+        .rbox::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+        .rbox.raw { color: #444; }
+        .rbox.boosted { color: #6b7280; }
+        .rbox.boosted strong { color: #9ca3af; font-weight: 500; }
+
+        .example-tab { background: transparent; border: 1px solid #1a1a1a; border-radius: 6px; color: #444; font-family: 'Montserrat', sans-serif; font-size: 10px; cursor: pointer; letter-spacing: 2px; transition: all 0.2s; }
+        .example-tab:hover { color: #888; border-color: #333; }
+        .active-tab { border-color: #333 !important; color: #e5e7eb !important; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-[#0a0a0a]">
+<div class="max-w-7xl mx-auto px-6 py-16">
+
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-16">
+        <div class="mb-4 sm:mb-0"><h1 class="text-2xl font-semibold tracking-tight">7BOOST.</h1></div>
+        <div class="flex items-center space-x-4">
+            <div class="text-right text-sm"><p class="font-medium">Chrome Extension</p></div>
+            <a href="https://chrome.google.com/webstore" class="accent-bg text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors mono tracking-wider">ADD TO CHROME</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="mb-8 text-center max-w-3xl mx-auto">
+        <p class="text-2xl md:text-3xl leading-snug text-gray-100 mb-6">THEY ALL HAVE AI, YOU HAVE 7BOOST.<br></p>
+        <p class="text-gray-400 text-base max-w-xl mx-auto leading-relaxed">Every prompt you send is leaving results on the table. 7BOOST rewrites it in one click so the AI give you the best answer.</p>
+    </section>
+
+    <!-- CTA Hero -->
+    <section class="mb-20 text-center">
+        <a href="https://chrome.google.com/webstore" class="inline-flex items-center space-x-4 bg-[#1a73e8] hover:bg-[#1557b0] transition-colors text-white px-8 py-4 rounded-lg glow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c1.85 0 3.56.63 4.93 1.67L5.67 16.93A7.96 7.96 0 0 1 4 12c0-4.41 3.59-8 8-8zm0 16c-1.85 0-3.56-.63-4.93-1.67L18.33 7.07A7.96 7.96 0 0 1 20 12c0 4.41-3.59 8-8 8z"/></svg>
+            <div class="text-left">
+                <p class="mono text-xs text-blue-200 leading-none mb-1">ADD TO</p>
+                <p class="font-semibold text-lg leading-none">Chrome — Free</p>
+            </div>
+        </a>
+        <p class="mono text-xs text-gray-600 mt-3">No credit card required. Start boosting in 30 seconds.</p>
+    </section>
+
+    <!-- Social Proof Numbers -->
+    <section class="mb-20">
+        <div class="grid grid-cols-2 gap-8 max-w-xl mx-auto text-center">
+            <div>
+                <p class="mono text-3xl font-medium text-white mb-1">1</p>
+                <p class="text-gray-500 text-xs mono">click to boost<br>any prompt</p>
+            </div>
+            <div class="border-l border-gray-800">
+                <p class="mono text-3xl font-medium text-white mb-1">10</p>
+                <p class="text-gray-500 text-xs mono">free boosts<br>every day</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Section -->
+    <section class="mb-20">
+        <h2 class="section-title text-gray-300 text-center">THE PROOF IS IN THE OUTPUT</h2>
+        <p class="text-gray-500 text-sm text-center mb-16 max-w-lg mx-auto">Same prompt. Same AI. The only difference is 7BOOST.</p>
+
+        <div class="flex justify-center gap-2 mb-12">
+            <button onclick="switchExample(0)" id="tab-0" class="example-tab active-tab px-4 py-2 text-xs tracking-widest uppercase transition-all">TikTok Script</button>
+            <button onclick="switchExample(1)" id="tab-1" class="example-tab px-4 py-2 text-xs tracking-widest uppercase transition-all">Job Interview</button>
+        </div>
+
+        <!-- Example 0 — TikTok -->
+        <div id="example-0" class="example-block max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-0 mb-px">
+                <div class="px-1">
+                    <p class="text-xs tracking-widest uppercase text-gray-700 mb-3 text-center">Prompt sent</p>
+                    <div class="bg-[#0d0d0d] border border-[#1a1a1a] rounded-tl-xl rounded-bl-xl rounded-tr-none rounded-br-none p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#222 transparent; display:flex; align-items:center;">
+                        <p class="text-gray-600 text-sm leading-relaxed">Write a 30-second TikTok script with an irresistible hook about luxury clothing.</p>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <p class="text-xs tracking-widest uppercase text-white mb-3 text-center">Boosted with 7BOOST.</p>
+                    <div class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-tr-xl rounded-br-xl rounded-tl-none rounded-bl-none p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+                        <p class="text-white text-xs leading-relaxed mb-3 pb-3 border-b border-[#1e1e1e]">You are an expert TikTok scriptwriter specializing in luxury fashion content.</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-3">Write a complete 30-second TikTok video script about luxury clothing. The script must include an irresistible hook that captures attention within the first 3 seconds. Provide a shot-by-shot breakdown. For each shot, specify the visual description, spoken lines, and on-screen text. Include the exact timing for each element so the total duration equals 30 seconds.</p>
+                        <p class="text-gray-600 text-xs leading-relaxed">Ensure the script highlights the appeal of luxury clothing and is formatted for easy reading by a video creator.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-0">
+                <div class="px-1">
+                    <div class="bg-[#0d0d0d] border-l border-r border-b border-[#1a1a1a] rounded-bl-xl p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#222 transparent;">
+                        <p class="text-xs tracking-widest uppercase text-gray-700 mb-4">AI Response</p>
+                        <p class="text-gray-600 text-xs leading-relaxed whitespace-pre-wrap">[Hook | 0–5 sec] Camera close-up, holding a luxury jacket
+"Most people think luxury clothing is about the logo. They're wrong—and it's costing them thousands."
+
+[Build Curiosity | 5–15 sec] Cut to fabric details, stitching, lining
+"The real reason wealthy people buy certain brands isn't status. It's craftsmanship. Look at the stitching, the fabric weight, the way it drapes. These details can make a piece look expensive for years—not just one season."
+
+[Value | 15–25 sec] Show side-by-side comparison of luxury vs. fast fashion
+"A great luxury item often outlasts multiple cheaper replacements. That's why true luxury shoppers focus on quality, fit, and timeless design before they ever look at the logo."
+
+[Call to Action | 25–30 sec] Point to camera
+"Want to know the 3 luxury brands insiders buy that most people overlook? Follow for part two."</p>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <div class="bg-[#0d0d0d] border-l border-r border-b border-[#2a2a2a] rounded-br-xl p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+                        <p class="text-xs tracking-widest uppercase text-white mb-4">AI Response</p>
+                        <div class="text-gray-400 text-xs leading-relaxed">
+                            <p class="text-gray-300 font-medium mb-3">TikTok Script: "Why Luxury Clothing Feels Different" (30 Seconds)</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 1 (0:00–0:03)</p>
+                            <p>Visual: Close-up montage of premium fabric, hand stitching, designer buttons, and a luxury blazer being placed on a hanger. Quick cuts synced to the beat.<br/>Spoken: "Stop scrolling—this is why luxury clothing instantly makes people look more expensive."<br/><span class="text-gray-600">On-Screen: "Why luxury clothing looks different 👀"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 2 (0:03–0:07)</p>
+                            <p>Visual: Side-by-side comparison of a standard jacket and a luxury jacket. Zoom into stitching, structure, and fabric texture.<br/>Spoken: "It's not just the logo. The difference starts with the materials."<br/><span class="text-gray-600">On-Screen: "Premium fabrics = premium appearance"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 3 (0:07–0:11)</p>
+                            <p>Visual: Slow-motion shot of a luxury coat draping naturally as someone walks through an upscale setting.<br/>Spoken: "Luxury fabrics hold their shape better, move beautifully, and photograph incredibly well."<br/><span class="text-gray-600">On-Screen: "Structure • Movement • Quality"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 4 (0:11–0:16)</p>
+                            <p>Visual: Macro shots of craftsmanship—hand-finishing details, precise seams, lining, buttons.<br/>Spoken: "Then there's the craftsmanship. Every detail is designed to feel intentional."<br/><span class="text-gray-600">On-Screen: "Craftsmanship matters"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 5 (0:16–0:21)</p>
+                            <p>Visual: Model getting dressed in a luxury outfit. Before-and-after transition.<br/>Spoken: "The result? Better fit, cleaner lines, and a more polished presence."<br/><span class="text-gray-600">On-Screen: "Fit changes everything"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 6 (0:21–0:26)</p>
+                            <p>Visual: Elegant walking shots in a luxury hotel lobby. Slow-motion confidence shots.<br/>Spoken: "Luxury clothing isn't just about what people see—it's about how it makes you feel."<br/><span class="text-gray-600">On-Screen: "Confidence is the real luxury"</span></p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">SHOT 7 (0:26–0:30)</p>
+                            <p>Visual: Final cinematic close-up of the outfit. Camera pans from shoes to jacket. End with a confident pose.<br/>Spoken: "When quality, craftsmanship, and confidence come together, that's true luxury."<br/><span class="text-gray-600">On-Screen: "Would you invest in luxury fashion? ↓"</span></p>
+                            <p class="text-gray-600 mt-3">Music: Modern luxury beat with dramatic drops at 0:03 and 0:16.<br/>Editing: Fast cuts first 10 sec, smoother cinematic shots afterward.<br/>Color grade: Rich contrast, warm highlights, premium editorial look.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 1 — Interview -->
+        <div id="example-1" class="example-block hidden max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-0 mb-px">
+                <div class="px-1">
+                    <p class="text-xs tracking-widest uppercase text-gray-700 mb-3 text-center">Prompt sent</p>
+                    <div class="bg-[#0d0d0d] border border-[#1a1a1a] rounded-tl-xl rounded-bl-xl rounded-tr-none rounded-br-none p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#222 transparent; display:flex; align-items:center;">
+                        <p class="text-gray-600 text-sm leading-relaxed">How to manage stress during a job interview?</p>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <p class="text-xs tracking-widest uppercase text-white mb-3 text-center">Boosted with 7BOOST.</p>
+                    <div class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-tr-xl rounded-br-xl rounded-tl-none rounded-bl-none p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+                        <p class="text-white text-xs leading-relaxed mb-3 pb-3 border-b border-[#1e1e1e]">You are an experienced career coach and performance psychologist.</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-3">Write a comprehensive, in-depth guide on managing stress during a job interview. The guide must be practical and actionable, addressing the full timeline from pre-interview preparation to post-interview reflection. Structure the response logically and base all recommendations on proven methods.</p>
+                        <p class="text-gray-600 text-xs leading-relaxed">Ensure the advice is clear and readily implementable.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-0">
+                <div class="px-1">
+                    <div class="bg-[#0d0d0d] border-l border-r border-b border-[#1a1a1a] rounded-bl-xl p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#222 transparent;">
+                        <p class="text-xs tracking-widest uppercase text-gray-700 mb-4">AI Response</p>
+                        <p class="text-gray-600 text-xs leading-relaxed whitespace-pre-wrap">Feeling stressed before a job interview is very common. The goal isn't to eliminate stress—it's to keep it at a level where it helps you stay alert.
+
+Before the Interview
+• Practice answers to common questions
+• Research the company
+• Do a mock interview
+• Prepare logistics early
+
+Right Before
+• Use controlled breathing (inhale 4s, hold 4s, exhale 6s)
+• Reframe: "We're both trying to see if this is a good match"
+• Arrive early
+
+During the Interview
+• Slow down your speaking
+• Focus on one question at a time
+• Remember perfection isn't required
+
+After the Interview
+• Write down what went well
+• Note 1–2 things to improve
+• Send a thank-you message
+• Move on to the next opportunity
+
+Quick reset: Take 3 slow breaths, relax your shoulders, remind yourself: "I just need to communicate my experience clearly."</p>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <div class="bg-[#0d0d0d] border-l border-r border-b border-[#2a2a2a] rounded-br-xl p-6" style="height:340px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+                        <p class="text-xs tracking-widest uppercase text-white mb-4">AI Response</p>
+                        <div class="text-gray-400 text-xs leading-relaxed">
+                            <p class="text-gray-300 font-medium mb-1">Managing Stress During a Job Interview</p>
+                            <p class="text-gray-600 mb-3">A Complete Practical Guide</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Understanding Interview Stress</p>
+                            <p>Anxiety typically comes from three sources: uncertainty, evaluation pressure, and high-stakes thinking. The body's stress response activates fight-or-flight—but stress symptoms are not signs of poor performance. They signal your body is preparing for an important event.</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 1 — Days Before</p>
+                            <p>Shift your goal: from "I must get this job" to "I will clearly communicate my value and determine whether this role is a mutual fit." Build a STAR story bank covering leadership, conflict, failure, achievement, and adaptability. Conduct mock interviews for familiarity, not perfection. Rehearse recovery lines: "Let me think for a moment."</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 2 — Night Before</p>
+                            <p>Avoid last-minute cramming. Prepare clothing, resume, and logistics. Use 5–10 min of mental rehearsal. Protect sleep: avoid caffeine, heavy meals, intense prep before bed.</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 3 — Morning Of</p>
+                            <p>Arrive 10–15 min early. Use controlled breathing: inhale 4s, exhale 6s, repeat 2–5 min. Light movement dissipates stress hormones. Replace catastrophic thoughts with realistic alternatives (CBT cognitive restructuring).</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 4 — During</p>
+                            <p>Pause before answering. Shift attention outward—be curious, not self-monitoring. Reframe physical symptoms as energy, not fear. Use grounding (5-4-3-2-1 method) if anxiety spikes.</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 5 — Handling Difficulties</p>
+                            <p>When caught off guard: acknowledge, pause, think aloud. When you don't know: "I haven't encountered that, but here's how I'd approach it." After mistakes: correct, continue, refocus—don't replay.</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Phase 6 — Post-Interview</p>
+                            <p>Decompress 30–60 min before evaluating. Review: What went well? What to improve? What to practice? Avoid rumination. Separate outcome from performance—hiring depends on many factors outside your control.</p>
+                            <p class="text-gray-500 font-medium mt-3 mb-1">Final Principle</p>
+                            <p>"I am here to have a professional conversation, communicate my value clearly, and determine whether this is a mutual fit." That mindset reduces pressure and allows your preparation to show.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="mb-20">
+        <h2 class="section-title text-gray-300 text-center">HOW DOES IT WORK?</h2>
+        <p class="text-gray-500 text-sm text-center mb-10 max-w-lg mx-auto">Watch 7BOOST in action. One click is all it takes.</p>
+        <div class="max-w-3xl mx-auto mb-14">
+            <div class="screenshot-placeholder rounded-lg aspect-video flex items-center justify-center relative overflow-hidden">
+                <div class="text-center z-10">
+                    <div class="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-white/20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <p class="mono text-xs text-gray-500">Video coming soon</p>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-transparent pointer-events-none"></div>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <div class="text-center">
+                <p class="step-number mb-4">01</p>
+                <h3 class="font-semibold text-gray-100 mb-2">Write your prompt</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Type whatever is on your mind. No need to think about structure or wording. Just write.</p>
+            </div>
+            <div class="text-center">
+                <p class="step-number mb-4">02</p>
+                <h3 class="font-semibold text-gray-100 mb-2">Add keywords</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Optionally add style keywords <span class="mono text-xs text-gray-400">(ex: SIMPLE</span>, <span class="mono text-xs text-gray-400">CONCISE</span>, <span class="mono text-xs text-gray-400">ACADEMIC)</span>, to control the tone and length of the AI response.</p>
+            </div>
+            <div class="text-center">
+                <p class="step-number mb-4">03</p>
+                <h3 class="font-semibold text-gray-100 mb-2">Hit Boost & Copy</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">7BOOST rewrites your prompt into a fully optimized version and copies it to your clipboard instantly.</p>
+            </div>
+            <div class="text-center">
+                <p class="step-number mb-4">04</p>
+                <h3 class="font-semibold text-gray-100 mb-2">Paste. Get a better answer.</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Paste into ChatGPT, Claude, Gemini, or any AI. Watch the difference. Every single time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="mb-20">
+        <h2 class="section-title text-gray-300 text-center">PRICING</h2>
+        <p class="text-gray-500 text-sm text-center mb-10 max-w-lg mx-auto">No excuses. At this price, the only question is why you haven't started yet.</p>
+        <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <div class="proof-card rounded-lg p-6">
+                <p class="mono text-xs text-gray-500 mb-2">FREE</p>
+                <p class="text-3xl font-semibold text-white mb-1">0$</p>
+                <p class="mono text-xs text-gray-600 mb-6">forever</p>
+                <div class="space-y-3 text-sm text-gray-400">
+                    <p>10 boosts per day</p>
+                    <p>All keywords</p>
+                    <p>AI-powered prompt optimization</p>
+                </div>
+                <a href="https://chrome.google.com/webstore" class="block mt-6 text-center mono text-xs border border-gray-700 hover:border-gray-500 text-gray-400 hover:text-gray-200 px-4 py-2 rounded transition-colors">GET STARTED</a>
+            </div>
+            <div class="rounded-lg p-6 border border-blue-800/60 bg-blue-950/20 relative opacity-80">
+                <div class="absolute top-0 right-0 mono text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-bl rounded-tr tracking-wider">COMING SOON</div>
+                <p class="mono text-xs text-blue-400 mb-2">PRO</p>
+                <p class="text-3xl font-semibold text-white mb-1">4$</p>
+                <p class="mono text-xs text-gray-600 mb-6">per month</p>
+                <div class="space-y-3 text-sm text-gray-300">
+                    <p>200 boosts per day</p>
+                    <p>All keywords</p>
+                    <p>AI-powered prompt optimization</p>
+                    <p>Email support</p>
+                </div>
+                <div class="block mt-6 text-center mono text-xs bg-gray-800 text-gray-500 px-4 py-2 rounded cursor-not-allowed">COMING SOON</div>
+            </div>
+        </div>
+        <p class="mono text-xs text-gray-600 mt-6 text-center">The Pro plan is not yet available for purchase. The Free plan is fully functional today.</p>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="mb-20 text-center">
+        <h2 class="section-title text-gray-300">WHO IS IT FOR?</h2>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="space-y-3 text-center">
+                <h3 class="font-medium text-gray-100">Professionals who rely on AI daily</h3>
+                <p class="text-gray-400 text-sm">Finance, law, consulting, medicine. When the quality of your AI output directly impacts your work, a better prompt is not optional.</p>
+            </div>
+            <div class="space-y-3 text-center">
+                <h3 class="font-medium text-gray-100">Students and researchers</h3>
+                <p class="text-gray-400 text-sm">Essays, dissertations, literature reviews. A well-structured prompt gets you a well-structured answer — not a wall of generic text to rewrite.</p>
+            </div>
+            <div class="space-y-3 text-center">
+                <h3 class="font-medium text-gray-100">Content creators and marketers</h3>
+                <p class="text-gray-400 text-sm">Scripts, captions, copy, campaigns. Stop reprompting five times to get something usable. Boost once, paste, done.</p>
+            </div>
+            <div class="space-y-3 text-center">
+                <h3 class="font-medium text-gray-100">Developers and technical users</h3>
+                <p class="text-gray-400 text-sm">Code reviews, architecture questions, debugging sessions. Precise prompts get precise answers — and 7BOOST makes every prompt precise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details -->
+    <section class="mb-20 text-center">
+        <h2 class="section-title text-gray-300">TECHNICAL DETAILS</h2>
+        <div class="relative max-w-4xl mx-auto">
+            <div style="position:absolute; left:50%; top:0; bottom:0; width:1px; background:#ffffff; transform:translateX(-50%);"></div>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-6">
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">PLATFORM</h4>
+                    <p class="text-gray-100">Chrome Extension<br>Chrome 114+ (Manifest V3)</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">STACK</h4>
+                    <p class="text-gray-100 mono text-sm">HTML / CSS / JS (UI)<br>Supabase (auth + backend)<br>Mistral AI API (optimization)<br>Chrome Side Panel API</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">PERMISSIONS</h4>
+                    <p class="text-gray-100">Clipboard write<br>Storage (local preferences)<br>Side panel</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">AUTHENTICATION</h4>
+                    <p class="text-gray-100">Supabase Auth<br>Email / password login<br>Password reset via email<br>Session persistence</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">PLANS</h4>
+                    <p class="text-gray-100">Free: 10 boosts per day<br><span class="text-gray-500">Pro: 200 boosts per day at 4$ per month (coming soon)</span><br>Daily reset</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-sm text-gray-400 mono mb-1">PRIVACY</h4>
+                    <p class="text-gray-100">No prompt history stored<br>API key secured server side<br>HTTPS only<br>EU-hosted database</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="mb-20 text-center">
+        <p class="text-xl font-semibold text-gray-100 mb-4">Stop leaving results on the table.</p>
+        <p class="text-gray-500 text-sm mb-8 max-w-md mx-auto">Every prompt you send without 7BOOST is a missed opportunity. It takes 30 seconds to install. There is no reason not to.</p>
+        <a href="https://chrome.google.com/webstore" class="inline-flex items-center space-x-4 bg-[#1a73e8] hover:bg-[#1557b0] transition-colors text-white px-8 py-4 rounded-lg glow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="4" fill="white"/><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c1.85 0 3.56.63 4.93 1.67L5.67 16.93A7.96 7.96 0 0 1 4 12c0-4.41 3.59-8 8-8zm0 16c-1.85 0-3.56-.63-4.93-1.67L18.33 7.07A7.96 7.96 0 0 1 20 12c0 4.41-3.59 8-8 8z"/></svg>
+            <div class="text-left">
+                <p class="mono text-xs text-blue-200 leading-none mb-1">ADD TO</p>
+                <p class="font-semibold text-lg leading-none">Chrome — Free</p>
+            </div>
+        </a>
+        <p class="mono text-xs text-gray-600 mt-3">No credit card required. Free forever on the base plan.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 pt-8 pb-4 text-center mono text-xs text-gray-500 space-y-3">
+        <p>© 2026 • 7BOOST. • All rights reserved</p>
+        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-600">
+            <a href="privacy-en.html" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+            <span>•</span>
+            <a href="terms-en.html" class="hover:text-gray-400 transition-colors">Terms of Service</a>
+            <span>•</span>
+            <a href="legal-en.html" class="hover:text-gray-400 transition-colors">Legal Notice</a>
+            <span>•</span>
+            <a href="mailto:contact@7boost.io" class="hover:text-gray-400 transition-colors">contact@7boost.io</a>
+        </div>
+        <p class="text-gray-700">7BOOST is an independent product. Not affiliated with Google or Mistral AI.</p>
+    </footer>
+
+</div>
+
+<script>
+    function switchExample(n) {
+        document.querySelectorAll('.example-block').forEach((b, i) => b.classList.toggle('hidden', i !== n));
+        document.querySelectorAll('.example-tab').forEach((t, i) => t.classList.toggle('active-tab', i === n));
+    }
+</script>
+
+</body>
+</html>
