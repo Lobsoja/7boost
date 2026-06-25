@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Confirmed — 7BOOST.</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0A0A0A;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      padding: 48px 24px;
+    }
+
+    .wrapper {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #E8E8E8;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #141414;
+      border: 1px solid #1E1E1E;
+      border-radius: 12px;
+      padding: 40px 32px;
+    }
+
+    .icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid #2A2A2A;
+      background: #1A1A1A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .icon-wrap svg {
+      display: block;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 400;
+      color: #E8E8E8;
+      margin-bottom: 12px;
+    }
+
+    .card-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #1E1E1E;
+      margin: 28px 0;
+    }
+
+    .card-note {
+      font-size: 11px;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .footer {
+      font-size: 10px;
+      font-weight: 300;
+      color: #333;
+      margin-top: 24px;
+      letter-spacing: 1px;
+    }
+
+    /* subtle entrance */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp 0.45s ease both; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="card">
+
+      <div class="icon-wrap">
+        <!-- checkmark -->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="9" stroke="#2A2A2A" stroke-width="1"/>
+          <path d="M6 10.5L8.8 13.2L14 7.5" stroke="#E8E8E8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <p class="card-title">Email confirmed</p>
+      <p class="card-body">
+        Your email address has been successfully verified.<br>
+        You can now close this page safely.
+      </p>
+
+      <hr class="divider" />
+
+      <p class="card-note">
+        You're all set! your 7BOOST. account is active and ready to use.
+      </p>
+
+    </div>
+
+    <p class="footer">© 2026 • 7BOOST. • All rights reserved</p>
+
+  </div>
+</body>
+</html>
