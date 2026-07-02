@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7BOOST. — Privacy Policy</title>
+    <title>7BOOST. Privacy Policy</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -79,7 +79,7 @@
             This document is provided in French, as required for legal compliance with French and EU regulations (RGPD / LCEN). An <a href="privacy-en.html">English translation is available here</a> for convenience. For questions in English, contact <a href="mailto:contact@7boost.io">contact@7boost.io</a>.
         </div>
 <h1>7BOOST. — Politique de confidentialité</h1>
-<p><em>Dernière mise à jour : 16 juin 2026</em></p>
+<p><em>Dernière mise à jour : 2 juillet 2026</em></p>
 <p>La présente politique de confidentialité a pour objet d'informer les utilisateurs de l'extension et du site 7BOOST. (ci-après le « Service ») de la manière dont leurs données personnelles sont collectées, utilisées, conservées et protégées, conformément au Règlement Général sur la Protection des Données (RGPD) et notamment à son article 13.</p>
 
 <h2>1. Identité et coordonnées du responsable de traitement</h2>
@@ -93,10 +93,10 @@
 <p>Dans le cadre de l'utilisation du Service, les catégories de données suivantes sont collectées :</p>
 <ul>
 <li>Données de compte : pseudonyme, adresse email et mot de passe (chiffré), via le système d'authentification Supabase Auth, lors de la création d'un compte.</li>
-<li>Données d'usage : nombre de requêtes de « boost » effectuées par jour, associées à l'identifiant du compte et à une date (table « usage »), afin d'appliquer la limite d'usage quotidienne gratuite.</li>
-<li>Contenu des prompts : le texte saisi par l'utilisateur (« raw prompt ») ainsi que les mots-clés de style optionnels sont transmis de manière ponctuelle au prestataire d'intelligence artificielle pour traitement, sans être stockés de façon permanente par le Service.</li>
-<li>Préférences locales : préférences d'affichage, langue de sortie choisie, compteurs locaux et tags par défaut, stockés localement sur l'appareil de l'utilisateur via chrome.storage.local et non transmis au Service.</li>
+<li>Données d'usage : nombre de requêtes de « boost » et d'extractions de mots-clés effectuées par jour, associées à l'identifiant du compte et à une date (table « usage »), afin d'appliquer les limites d'usage quotidiennes.</li>
+<li>Préférences locales : compteurs d'affichage journaliers, mots-clés par défaut, langue préférée et préférences d'interface, stockés localement sur l'appareil de l'utilisateur via chrome.storage.local et non transmis au Service.</li>
 <li>Données de connexion techniques : informations strictement nécessaires au fonctionnement de l'authentification (jeton de session Supabase).</li>
+<li>Empreinte cryptographique de l'adresse email : après suppression d'un compte, une empreinte non réversible de l'adresse email (HMAC-SHA256) est conservée à seule fin de prévention des abus de l'essai gratuit (voir section 6).</li>
 </ul>
 <p><em>Le Service ne collecte aucune donnée bancaire, aucune donnée de santé, aucune géolocalisation, et n'effectue aucun profilage des utilisateurs.</em></p>
 
@@ -104,59 +104,59 @@
 <p>Les données personnelles décrites ci-dessus sont traitées pour les finalités suivantes :</p>
 <ul>
 <li>Permettre la création, l'authentification et la gestion du compte utilisateur (pseudonyme, email, mot de passe).</li>
-<li>Fournir la fonctionnalité principale du Service, à savoir la réécriture optimisée des prompts soumis par l'utilisateur (contenu des prompts).</li>
-<li>Appliquer la limite d'usage quotidienne gratuite et prévenir les abus (données d'usage).</li>
+<li>Fournir la fonctionnalité principale du Service, à savoir la réécriture optimisée des prompts soumis par l'utilisateur.</li>
+<li>Appliquer les limites d'usage quotidiennes et prévenir les abus (données d'usage).</li>
 <li>Mémoriser les préférences de l'utilisateur afin d'améliorer son expérience (préférences locales).</li>
+<li>Prévenir la création abusive de comptes multiples visant à contourner la période d'essai gratuite (empreinte cryptographique de l'email, conservée après suppression du compte).</li>
 </ul>
 
 <h2>4. Base légale des traitements</h2>
 <ul>
 <li>Exécution du contrat : la création de compte, l'authentification, la fourniture du service de réécriture de prompts et l'application des quotas d'usage sont nécessaires à l'exécution du contrat conclu avec l'utilisateur lors de son inscription (article 6.1.b du RGPD).</li>
-<li>Intérêt légitime : la conservation des compteurs d'usage et la vérification des quotas répondent à l'intérêt légitime du responsable de traitement à assurer le bon fonctionnement, la sécurité et la viabilité économique du Service (article 6.1.f du RGPD).</li>
+<li>Intérêt légitime : la conservation des compteurs d'usage et la vérification des quotas répondent à l'intérêt légitime du responsable de traitement à assurer le bon fonctionnement et la sécurité du Service (article 6.1.f du RGPD).</li>
+<li>Intérêt légitime - prévention de la fraude : la conservation, après suppression d'un compte, d'une empreinte cryptographique non réversible de l'adresse email répond à l'intérêt légitime du responsable de traitement à prévenir la création abusive de comptes multiples visant à contourner la limitation de l'essai gratuit. Cette finalité est reconnue par le considérant 47 du RGPD comme pouvant constituer un intérêt légitime (article 6.1.f du RGPD). La conservation est strictement limitée à la durée nécessaire à cet objectif (voir section 6).</li>
 </ul>
 
 <h2>5. Destinataires et partage des données</h2>
 <p>Les données personnelles ne sont ni vendues, ni louées, ni échangées avec des tiers à des fins commerciales. Elles peuvent être transmises aux destinataires suivants, dans la stricte mesure nécessaire au fonctionnement du Service :</p>
 <ul>
-<li>Supabase Inc. : hébergement de la base de données et gestion de l'authentification, stockage de la table « usage ». L'instance Supabase utilisée pour le Service est hébergée dans l'Union européenne. Supabase agit en qualité de sous-traitant au sens du RGPD.</li>
-<li>Mistral AI (prestataire d'intelligence artificielle) : réception du contenu du prompt brut de l'utilisateur (et, le cas échéant, des mots-clés de style et de la langue de sortie souhaitée) à des fins de génération du prompt optimisé. Ce contenu est transmis de manière ponctuelle, à chaque requête, via une fonction Edge sécurisée, et n'est pas conservé par le Service au-delà du traitement de la requête.</li>
+<li>Supabase Inc. : hébergement de la base de données et gestion de l'authentification, stockage des données d'usage et de l'empreinte cryptographique de l'email. L'instance Supabase utilisée pour le Service est hébergée dans l'Union européenne. Supabase agit en qualité de sous-traitant au sens du RGPD.</li>
+<li>Mistral AI (prestataire d'intelligence artificielle) : réception du contenu du prompt de l'utilisateur (et, le cas échéant, des mots-clés de style et de la langue de sortie souhaitée) à des fins de génération du prompt optimisé. Ce contenu est transmis à chaque requête via une fonction Edge sécurisée et non conservé par le Service au-delà du traitement de la requête.</li>
+<li>GitHub Pages (GitHub, Inc.) : hébergement du site internet vitrine du Service. GitHub, Inc. est une société établie aux États-Unis. À ce titre, la consultation du site vitrine peut entraîner l'enregistrement de données techniques telles que l'adresse IP du visiteur par les infrastructures de GitHub. GitHub, Inc. est certifiée au titre du Data Privacy Framework UE-États-Unis, ce qui constitue le fondement du transfert de ces données vers les États-Unis (article 45 du RGPD). Ce cadre fait l'objet d'une surveillance réglementaire en cours au niveau européen.</li>
 </ul>
 <p>Aucune donnée personnelle liée au compte de l'utilisateur (pseudonyme, email, identifiant de compte) n'est transmise à Mistral AI. Seul le contenu textuel du prompt soumis par l'utilisateur (et les éventuels mots-clés de style associés) est envoyé, dans la seule finalité technique d'optimisation du prompt.</p>
 <p>Mistral AI est une société de droit français dont le siège est situé dans l'Union européenne (Paris, France). Le traitement du contenu des prompts par Mistral AI s'effectue donc au sein de l'Union européenne, sans transfert vers un pays tiers, et dans le respect des obligations du RGPD applicables aux sous-traitants établis dans l'Union européenne.</p>
-<p><em>Si l'utilisateur choisit néanmoins d'inclure de telles données dans le texte de son prompt, il en est seul responsable. Le Service ne contrôle ni ne filtre le contenu des prompts soumis, et ne peut être tenu responsable du traitement de ces informations par le prestataire d'intelligence artificielle au-delà de la finalité décrite ci-dessus.</em></p>
-<ul>
-<li>GitHub Pages : hébergement du site internet vitrine du Service.</li>
-</ul>
-<p>Les données personnelles de compte et d'usage, hébergées par Supabase, et le contenu des prompts, traité par Mistral AI, restent ainsi localisés au sein de l'Union européenne. Le site internet vitrine du Service (hébergé sur GitHub Pages, dont l'opérateur est situé aux États-Unis) ne collecte pas de données personnelles : sa consultation n'entraîne donc pas de transfert de données personnelles vers ce prestataire dans le cadre des traitements décrits par la présente politique.</p>
+<p><em>Si l'utilisateur choisit d'inclure dans le texte de son prompt des données à caractère personnel (les siennes ou celles de tiers), il en est seul responsable. Le Service ne contrôle ni ne filtre le contenu des prompts soumis.</em></p>
 
 <h2>6. Durée de conservation des données</h2>
 <ul>
-<li>Données de compte (pseudonyme, email, mot de passe) : conservées pendant toute la durée de vie du compte. En cas de suppression du compte par l'utilisateur ou sur sa demande, ces données sont supprimées dans un délai maximal de 30 jours, ce délai correspondant au temps technique nécessaire à la purge effective des systèmes (base de données principale et sauvegardes).</li>
-<li>Données d'usage (compteurs journaliers) : chaque enregistrement quotidien (compte associé à une date et un nombre de requêtes) est conservé pendant 90 jours à compter de sa création, puis supprimé automatiquement. Cette durée correspond au temps nécessaire à l'application de la limite quotidienne et à la détection d'éventuels usages anormaux.</li>
-<li>Contenu des prompts transmis au prestataire d'intelligence artificielle : non conservé de façon permanente par le Service après le traitement de la requête. Le prestataire d'intelligence artificielle peut appliquer sa propre politique de conservation, décrite dans ses conditions d'utilisation.</li>
-<li>Préférences locales (chrome.storage.local) : conservées sur l'appareil de l'utilisateur jusqu'à leur suppression manuelle ou la désinstallation de l'extension.</li>
+<li>Données de compte (pseudonyme, email, mot de passe) : conservées pendant toute la durée de vie du compte. À la suppression du compte, l'email en clair est supprimé immédiatement par le système d'authentification et les autres données identifiantes sont effacées quasi-immédiatement. Ces données peuvent subsister dans les sauvegardes techniques de l'hébergeur jusqu'à 30 jours supplémentaires, hors du contrôle direct du responsable de traitement. Exception - empreinte cryptographique de l'adresse email : une empreinte HMAC-SHA256 (avec clé secrète conservée exclusivement côté serveur) est conservée après suppression du compte, à seule fin de détecter une tentative de recréation abusive d'un compte pour bénéficier d'un nouvel essai gratuit. Cette empreinte ne permet pas, à elle seule, de retrouver l'adresse email d'origine. Elle est supprimée automatiquement par un processus technique planifié 18 mois après la date de suppression du compte. La date de suppression du compte (deleted_at) est conservée le temps nécessaire au calcul de ce délai, soit au plus 18 mois.</li>
+<li>Données d'usage (compteurs journaliers) : supprimées immédiatement à la suppression du compte. Pour les comptes actifs, ces données sont conservées le temps nécessaire à l'application des limites quotidiennes et à la détection d'éventuels usages anormaux.</li>
+<li>Contenu des prompts : non conservé par le Service après traitement de la requête. Le prestataire d'intelligence artificielle peut appliquer sa propre politique de conservation, décrite dans ses conditions d'utilisation.</li>
+<li>Préférences locales (chrome.storage.local) : stockées sur l'appareil de l'utilisateur. Elles ne sont pas supprimées automatiquement à la suppression du compte et restent sur l'appareil jusqu'à leur suppression manuelle ou la désinstallation de l'extension.</li>
 </ul>
 
 <h2>7. Sécurité des données</h2>
 <p>Le responsable de traitement met en œuvre des mesures techniques et organisationnelles appropriées afin de protéger les données personnelles contre tout accès non autorisé, perte, altération ou divulgation, notamment :</p>
 <ul>
-<li>La clé d'accès au prestataire d'intelligence artificielle est stockée exclusivement dans les secrets de la fonction Edge côté serveur et n'est jamais exposée dans le code de l'extension ni accessible côté client.</li>
-<li>Toute requête vers la fonction de traitement des prompts est soumise à une vérification d'authentification (jeton JWT) ; toute requête non authentifiée est rejetée.</li>
+<li>La clé d'accès à l'API du prestataire d'intelligence artificielle est stockée exclusivement dans les secrets de la fonction Edge côté serveur et n'est jamais exposée dans le code de l'extension ni accessible côté client.</li>
+<li>Toute requête vers les fonctions de traitement est soumise à une vérification d'authentification (jeton JWT) ; toute requête non authentifiée est rejetée.</li>
 <li>Les mots de passe sont gérés de manière chiffrée par le prestataire d'authentification (Supabase Auth) et ne sont jamais stockés en clair.</li>
-<li>La table contenant les données d'usage est protégée par des règles de sécurité au niveau des lignes (Row Level Security).</li>
+<li>Les tables de données sont protégées par des règles de sécurité au niveau des lignes (Row Level Security) ; les écritures en base ne sont possibles que via les fonctions Edge du Service.</li>
+<li>L'empreinte cryptographique de l'email est calculée via HMAC-SHA256. Il s'agit d'une donnée pseudonymisée : elle ne permet pas d'identifier un utilisateur sans disposer à la fois de la clé secrète (conservée côté serveur uniquement) et de l'adresse email à tester. Elle n'est jamais exposée côté client.</li>
 </ul>
 
 <h2>8. Droits des utilisateurs</h2>
 <p>Conformément au RGPD, tout utilisateur dispose des droits suivants sur ses données personnelles :</p>
 <ul>
-<li>Droit d'accès : obtenir la confirmation que des données le concernant sont traitées et en obtenir une copie (article 15 du RGPD).</li>
+<li>Droit d'accès : obtenir la confirmation que des données le concernant sont traitées et en obtenir une copie (article 15 du RGPD). S'agissant de l'empreinte cryptographique conservée après suppression du compte, le responsable de traitement peut confirmer l'existence ou l'absence d'un tel enregistrement, sans en exposer la valeur brute.</li>
 <li>Droit de rectification : demander la correction de données inexactes ou incomplètes (article 16 du RGPD).</li>
-<li>Droit à l'effacement : demander la suppression de ses données personnelles, notamment par la suppression de son compte (article 17 du RGPD).</li>
-<li>Droit d'opposition : s'opposer, pour des motifs légitimes, au traitement de ses données fondé sur l'intérêt légitime du responsable de traitement (article 21 du RGPD).</li>
+<li>Droit à l'effacement : demander la suppression de ses données personnelles, notamment par la suppression de son compte (article 17 du RGPD). La conservation résiduelle de l'empreinte cryptographique après suppression du compte est justifiée par l'intérêt légitime de prévention de la fraude et prend fin automatiquement après 18 mois.</li>
+<li>Droit d'opposition : s'opposer, pour des motifs légitimes, au traitement de ses données fondé sur l'intérêt légitime du responsable de traitement (article 21 du RGPD). Toute demande d'opposition sera examinée individuellement. S'agissant de l'empreinte cryptographique conservée après suppression du compte, le responsable de traitement se réserve la possibilité de maintenir ce traitement lorsque la demande d'opposition est présentée dans un contexte laissant supposer une tentative de contournement de l'essai gratuit, la conservation répondant alors à des motifs légitimes impérieux au sens de l'article 21(1) du RGPD.</li>
 <li>Droit à la portabilité : recevoir les données fournies dans un format structuré, couramment utilisé et lisible par machine (article 20 du RGPD).</li>
 <li>Droit à la limitation du traitement : demander la limitation du traitement de ses données dans certains cas prévus par le RGPD.</li>
 </ul>
-<p>Ces droits peuvent être exercés en écrivant à l'adresse <strong>contact@7boost.io</strong>. Une réponse sera apportée dans un délai d'un mois à compter de la réception de la demande, ce délai pouvant être prolongé de deux mois supplémentaires en cas de demande complexe ou de nombre élevé de demandes, conformément à l'article 12.3 du RGPD.</p>
+<p>Ces droits peuvent être exercés en écrivant à l'adresse <strong>contact@7boost.io</strong>. Une réponse sera apportée dans un délai d'un mois à compter de la réception de la demande, ce délai pouvant être prolongé de deux mois supplémentaires en cas de demande complexe ou de volume élevé de demandes, conformément à l'article 12.3 du RGPD.</p>
 
 <h2>9. Droit d'introduire une réclamation</h2>
 <p>Si l'utilisateur estime, après avoir contacté le responsable de traitement, que ses droits ne sont pas respectés, il peut introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :</p>
